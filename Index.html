@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>SACCO Membership Form</title>
+<style>
+:root{--bg:#f4f7f5;--card:#fff;--text:#14261d;--muted:#5d6f66;--line:#d5e0da;--brand:#0f7a4d;--brand2:#0b5c3a;--err:#c0392b;--ok:#e6f4ec;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0f1713;--card:#17231c;--text:#e6f1ea;--muted:#9bb0a4;--line:#2a3b32;--brand:#2fb578;--brand2:#25986a;--err:#ff7b6b;--ok:#1b2f25}}
+:root[data-theme="dark"]{--bg:#0f1713;--card:#17231c;--text:#e6f1ea;--muted:#9bb0a4;--line:#2a3b32;--brand:#2fb578;--brand2:#25986a;--err:#ff7b6b;--ok:#1b2f25}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;line-height:1.5}
+.wrap{max-width:640px;margin:0 auto;padding:16px}
+header{text-align:center;padding:12px 0 8px}
+header h1{margin:0;font-size:1.5rem;color:var(--brand)}
+header p{margin:4px 0 0;color:var(--muted);font-size:.95rem}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px;margin-top:12px}
+.bar{height:8px;background:var(--line);border-radius:99px;overflow:hidden}
+.bar i{display:block;height:100%;width:0;background:var(--brand);transition:width .3s}
+.steplabel{display:flex;justify-content:space-between;font-size:.85rem;color:var(--muted);margin:8px 0 0}
+h2{margin:0 0 4px;font-size:1.2rem}
+.sub{margin:0 0 14px;color:var(--muted);font-size:.9rem}
+.f{margin-bottom:14px}
+label{display:block;font-weight:600;font-size:.9rem;margin-bottom:4px}
+label span{color:var(--err)}
+input,select,textarea{width:100%;padding:11px 12px;border:1px solid var(--line);border-radius:10px;font:inherit;background:var(--bg);color:var(--text)}
+input:focus,select:focus,textarea:focus{outline:2px solid var(--brand);border-color:transparent}
+.bad input,.bad select{border-color:var(--err)}
+.msg{display:none;color:var(--err);font-size:.8rem;margin-top:3px}
+.bad .msg{display:block}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media(max-width:480px){.row{grid-template-columns:1fr}}
+.nav{display:flex;gap:10px;margin-top:18px}
+button{flex:1;padding:12px;border-radius:10px;border:0;font:inherit;font-weight:700;cursor:pointer}
+.next{background:var(--brand);color:#fff}.next:hover{background:var(--brand2)}
+.back{background:transparent;border:1px solid var(--line);color:var(--text)}
+.wa{background:#25d366;color:#06361b}
+.alt{background:transparent;border:1px solid var(--brand);color:var(--brand);width:100%;margin-top:10px}
+.sec{display:none}.sec.on{display:block}
+.rev{background:var(--ok);border-radius:10px;padding:12px;margin-bottom:10px;font-size:.9rem}
+.rev h3{margin:0 0 6px;font-size:.95rem;color:var(--brand)}
+.rev div{display:flex;justify-content:space-between;gap:10px;padding:2px 0;border-bottom:1px dashed var(--line)}
+.rev b{text-align:right;word-break:break-word}
+.chk{display:flex;gap:10px;align-items:flex-start;font-size:.9rem;font-weight:400}
+.chk input{width:auto;margin-top:4px}
+.chips{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.chips label{display:flex;align-items:center;gap:8px;border:1px solid var(--line);border-radius:10px;padding:9px 10px;font-weight:500;margin:0;cursor:pointer}
+.chips input{width:auto}
+.bad .chips label{border-color:var(--err)}
+.prev{margin-top:8px}
+.prev img{max-width:100%;max-height:170px;border-radius:10px;border:1px solid var(--line)}
+.note{font-size:.8rem;color:var(--muted);margin-top:10px}
+.small{font-size:.82rem;font-weight:400;margin:6px 0 0}
+.small input{margin-top:2px}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+<h1>SACCO Membership Form</h1>
+<p>Fill in your details step by step. It takes about 5 minutes.</p>
+</header>
+
+<div class="card">
+<div class="bar"><i id="pb"></i></div>
+<div class="steplabel"><span id="sl"></span><span id="st"></span></div>
+</div>
+
+<div class="card" id="form">
+
+<div class="sec on" data-t="Personal details">
+<h2>Personal details</h2><p class="sub">As they appear on your identification document.</p>
+<div class="f"><label>Full name <span>*</span></label><input id="name" autocomplete="name" placeholder="Surname and given names"><div class="msg">Please enter your full name.</div></div>
+<div class="row">
+<div class="f"><label>Date of birth <span>*</span></label><input id="dob" type="date"><div class="msg">Enter a valid date (18 years or older).</div></div>
+<div class="f"><label>Gender <span>*</span></label><select id="gender"><option value="">Select</option><option>Female</option><option>Male</option></select><div class="msg">Select gender.</div></div>
+</div>
+<div class="f"><label>Marital status <span>*</span></label><select id="marital"><option value="">Select</option><option>Single</option><option>Married</option><option>Divorced</option><option>Widowed</option></select><div class="msg">Select status.</div></div>
+<div class="row">
+<div class="f"><label>ID type <span>*</span></label><select id="idtype"><option value="">Select</option><option>National ID</option><option>Passport</option><option>Driving permit</option><option>Voter’s card</option><option>Refugee ID</option></select><div class="msg">Select ID type.</div></div>
+<div class="f"><label>ID number <span>*</span></label><input id="nin" placeholder="e.g. 12345678"><div class="msg">Enter your ID number.</div></div>
+</div>
+</div>
+
+<div class="sec" data-t="Contact information">
+<h2>Contact information</h2><p class="sub">How we can reach you.</p>
+<div class="row">
+<div class="f"><label>Phone number <span>*</span></label><input id="phone" type="tel" placeholder="07XXXXXXXX"><div class="msg">Enter a valid phone number.</div></div>
+<div class="f"><label>Alternative phone number</label><input id="alt" type="tel" placeholder="07XXXXXXXX"><div class="msg">Enter a valid phone number.</div></div>
+</div>
+<div class="f"><label>WhatsApp number <span>*</span></label><input id="wa" type="tel" placeholder="07XXXXXXXX"><label class="chk small"><input type="checkbox" id="samewa"><span>Same as my phone number</span></label><div class="msg">Enter a valid WhatsApp number.</div></div>
+<div class="f"><label>Email address</label><input id="email" type="email" placeholder="you@example.com"><div class="msg">Enter a valid email.</div></div>
+<div class="row">
+<div class="f"><label>County <span>*</span></label><input id="county"><div class="msg">Required.</div></div>
+<div class="f"><label>Region <span>*</span></label><input id="region"><div class="msg">Required.</div></div>
+</div>
+<div class="f"><label>Physical address <span>*</span></label><input id="addr" placeholder="Village, street, landmark"><div class="msg">Required.</div></div>
+<div class="f" id="chanf"><label>Preferred communication channel <span>*</span></label>
+<div class="chips"><label><input type="checkbox" class="ch" value="WhatsApp">WhatsApp</label><label><input type="checkbox" class="ch" value="SMS">SMS</label><label><input type="checkbox" class="ch" value="Email">Email</label><label><input type="checkbox" class="ch" value="Phone call">Phone call</label></div>
+<div class="msg">Choose at least one.</div></div>
+</div>
+
+<div class="sec" data-t="Work details">
+<h2>Work details</h2><p class="sub">Where and how you earn a living.</p>
+<div class="f"><label>Occupation <span>*</span></label><select id="occ"><option value="">Select</option><option>Employed</option><option>Self-employed / Business</option><option>Farmer</option><option>Student</option><option>Other</option></select><div class="msg">Select occupation.</div></div>
+<div class="f"><label>Employer / Business name</label><input id="employer"></div>
+<div class="f"><label>Work location <span>*</span></label><input id="wloc" placeholder="Town, area or farm location"><div class="msg">Required.</div></div>
+</div>
+
+<div class="sec" data-t="Next of kin">
+<h2>Next of kin</h2><p class="sub">Person to contact in case of emergency.</p>
+<div class="f"><label>Full name <span>*</span></label><input id="kname"><div class="msg">Required.</div></div>
+<div class="f"><label>Relationship <span>*</span></label><select id="krel"><option value="">Select</option><option>Spouse</option><option>Parent</option><option>Child</option><option>Sibling</option><option>Other</option></select><div class="msg">Select relationship.</div></div>
+<div class="row">
+<div class="f"><label>Phone number <span>*</span></label><input id="kphone" type="tel"><div class="msg">Enter a valid phone number.</div></div>
+<div class="f"><label>Alternative phone number</label><input id="kalt" type="tel"><div class="msg">Enter a valid phone number.</div></div>
+</div>
+<div class="f"><label>Email address</label><input id="kemail" type="email"><div class="msg">Enter a valid email.</div></div>
+<div class="f"><label>Physical address <span>*</span></label><input id="kaddr"><div class="msg">Required.</div></div>
+</div>
+
+<div class="sec" data-t="Membership &amp; savings">
+<h2>Membership &amp; savings</h2><p class="sub">Choose how you want to join.</p>
+<div class="row">
+<div class="f"><label>Membership type <span>*</span></label><select id="mtype"><option value="">Select</option><option>Individual</option><option>Group</option><option>Youth</option></select><div class="msg">Select type.</div></div>
+<div class="f"><label>Payment method <span>*</span></label><select id="pay"><option value="">Select</option><option>M-Pesa</option><option>Airtel Money</option><option>Cash</option><option>Bank transfer</option></select><div class="msg">Select method.</div></div>
+</div>
+<div class="row">
+<div class="f"><label>Initial deposit (KES) <span>*</span></label><input id="dep" type="number" min="0" inputmode="numeric"><div class="msg">Enter an amount.</div></div>
+<div class="f"><label>Contribution amount (KES) <span>*</span></label><input id="mon" type="number" min="0" inputmode="numeric"><div class="msg">Enter an amount.</div></div>
+</div>
+<div class="f"><label>Contribution frequency <span>*</span></label><select id="freq"><option value="">Select</option><option>Daily</option><option>Weekly</option><option>Every two weeks</option><option>Monthly</option><option>Quarterly</option></select><div class="msg">Select frequency.</div></div>
+<div class="f"><label>Anything else we should know?</label><textarea id="more" rows="2"></textarea></div>
+</div>
+
+<div class="sec" data-t="Identification &amp; verification">
+<h2>Identification &amp; verification</h2><p class="sub">Upload clear photos. Images only, up to 10 MB each.</p>
+<div class="f"><label>ID – front <span>*</span></label><input id="idf" type="file" accept="image/*"><div class="prev"></div><div class="msg">Please upload a photo (image under 10 MB).</div></div>
+<div class="f"><label>ID – back <span>*</span></label><input id="idb" type="file" accept="image/*"><div class="prev"></div><div class="msg">Please upload a photo (image under 10 MB).</div></div>
+<div class="f"><label>Passport-size photo of yourself <span>*</span></label><input id="photo" type="file" accept="image/*"><div class="prev"></div><div class="msg">Please upload a photo (image under 10 MB).</div></div>
+</div>
+
+<div class="sec" data-t="Review &amp; send">
+<h2>Review &amp; send</h2><p class="sub">Check your details, then send them on WhatsApp.</p>
+<div id="review"></div>
+<label class="chk"><input type="checkbox" id="decl"><span>I confirm the information above is true and I agree to the SACCO’s rules and by-laws.</span></label>
+<div class="msg" id="declmsg">Please tick the box to continue.</div>
+<p class="note"><b>1.</b> Tap <b>Send via WhatsApp</b> and press Send in WhatsApp to submit your details.<br><b>2.</b> WhatsApp cannot attach photos automatically, so then tap <b>Attach ID &amp; photo</b> (or add the 3 photos in the chat yourself).</p>
+<button class="alt" id="shr" type="button">Attach ID &amp; photo</button>
+</div>
+
+<div class="nav"><button class="back" id="bk" style="display:none">Back</button><button class="next" id="nx">Next</button></div>
+</div>
+</div>
+
+<script>
+var SACCO_NAME="Our SACCO";
+var WA_NUMBER="254756201253";
+var $=function(i){return document.getElementById(i)};
+var steps=document.querySelectorAll(".sec"),cur=0;
+var labels={name:"Full name",dob:"Date of birth",gender:"Gender",marital:"Marital status",idtype:"ID type",nin:"ID number",phone:"Phone",alt:"Alternative phone",wa:"WhatsApp number",email:"Email",county:"County",region:"Region",addr:"Physical address",chan:"Preferred channel",occ:"Occupation",employer:"Employer/Business",wloc:"Work location",kname:"Name",krel:"Relationship",kphone:"Phone",kalt:"Alternative phone",kemail:"Email",kaddr:"Physical address",mtype:"Membership type",pay:"Payment method",dep:"Initial deposit (KES)",mon:"Contribution (KES)",freq:"Contribution frequency",more:"Notes"};
+var groups=[["Personal details",["name","dob","gender","marital","idtype","nin"]],["Contact information",["phone","alt","wa","email","county","region","addr","chan"]],["Work details",["occ","employer","wloc"]],["Next of kin",["kname","krel","kphone","kalt","kemail","kaddr"]],["Membership & savings",["mtype","pay","dep","mon","freq","more"]]];
+var req=[["name","dob","gender","marital","idtype","nin"],["phone","wa","county","region","addr","chan"],["occ","wloc"],["kname","krel","kphone","kaddr"],["mtype","pay","dep","mon","freq"],["idf","idb","photo"]];
+var allReq=[].concat.apply([],req);
+var phones=["phone","alt","wa","kphone","kalt"],emails=["email","kemail"],files=["idf","idb","photo"];
+function chans(){return Array.prototype.map.call(document.querySelectorAll(".ch:checked"),function(c){return c.value})}
+function val(i){return i==="chan"?chans().join(", "):$(i).value.trim()}
+function phoneOk(v){return /^(\+?254|0)?[17]\d{8}$/.test(v.replace(/[\s-]/g,""))}
+function check(i){
+ var ok=true,box;
+ if(i==="chan"){ok=chans().length>0;$("chanf").classList.toggle("bad",!ok);return ok}
+ box=$(i).parentNode;
+ if(files.indexOf(i)>-1){var f=$(i).files[0];ok=!!f&&f.type.indexOf("image/")===0&&f.size<=10485760}
+ else{
+  var v=val(i);
+  if(v==="")ok=allReq.indexOf(i)===-1;
+  else if(i==="dob"){var a=(Date.now()-new Date(v))/31557600000;ok=a>=18&&a<110}
+  else if(phones.indexOf(i)>-1)ok=phoneOk(v);
+  else if(emails.indexOf(i)>-1)ok=/^\S+@\S+\.\S+$/.test(v);
+ }
+ box.classList.toggle("bad",!ok);return ok;
+}
+function validateStep(n){
+ var ok=true,all=req[n]||[];
+ var extra={1:["alt","email"],3:["kalt","kemail"]}[n]||[];
+ all.concat(extra).forEach(function(i){if(!check(i))ok=false});
+ return ok;
+}
+function show(n){
+ cur=n;steps.forEach(function(s,k){s.classList.toggle("on",k===n)});
+ $("pb").style.width=((n+1)/steps.length*100)+"%";
+ $("sl").textContent="Step "+(n+1)+" of "+steps.length;
+ $("st").innerHTML=steps[n].getAttribute("data-t");
+ $("bk").style.display=n?"block":"none";
+ var last=n===steps.length-1;
+ $("nx").textContent=last?"Send via WhatsApp":"Next";
+ $("nx").className=last?"wa":"next";
+ if(last)buildReview();
+ window.scrollTo({top:0,behavior:"smooth"});
+}
+function buildReview(){
+ var r=$("review");r.textContent="";
+ groups.forEach(function(g){
+  var box=document.createElement("div");box.className="rev";
+  var h=document.createElement("h3");h.textContent=g[0];box.appendChild(h);
+  var n=0;
+  g[1].forEach(function(k){
+   var v=val(k);if(!v)return;n++;
+   var d=document.createElement("div"),s=document.createElement("span"),b=document.createElement("b");
+   s.textContent=labels[k];b.textContent=v;d.appendChild(s);d.appendChild(b);box.appendChild(d);
+  });
+  if(n)r.appendChild(box);
+ });
+ var vb=document.createElement("div");vb.className="rev";
+ var vh=document.createElement("h3");vh.textContent="Verification";vb.appendChild(vh);
+ [["ID front","idf"],["ID back","idb"],["Photo","photo"]].forEach(function(p){
+  var d=document.createElement("div"),s=document.createElement("span"),b=document.createElement("b");
+  s.textContent=p[0];b.textContent=$(p[1]).files[0]?"Uploaded ✓":"Missing";d.appendChild(s);d.appendChild(b);vb.appendChild(d);
+ });
+ r.appendChild(vb);
+ $("shr").style.display=(navigator.canShare&&navigator.canShare({files:[new File(["x"],"x.png",{type:"image/png"})]}))?"block":"none";
+}
+function message(){
+ var m="*New SACCO Membership Application*\n"+SACCO_NAME+"\n";
+ groups.forEach(function(g){
+  m+="\n*"+g[0]+"*\n";
+  g[1].forEach(function(k){if(val(k))m+=labels[k]+": "+val(k)+"\n"});
+ });
+ m+="\n*Identification & verification*\nID front, ID back and passport photo: will be sent in the next messages.\n";
+ m+="\nDeclaration: Applicant confirmed the information is true.\nSubmitted: "+new Date().toLocaleString();
+ return m;
+}
+$("nx").onclick=function(){
+ if(cur<steps.length-1){
+  if(validateStep(cur))show(cur+1);
+  else{var b=document.querySelector(".sec.on .bad");if(b)b.scrollIntoView({block:"center",behavior:"smooth"})}
+ }else{
+  if(!$("decl").checked){$("declmsg").style.display="block";return}
+  $("declmsg").style.display="none";
+  window.open("https://wa.me/"+WA_NUMBER+"?text="+encodeURIComponent(message()),"_blank");
+ }
+};
+$("shr").onclick=function(){
+ var fl=files.map(function(i){return $(i).files[0]}).filter(Boolean);
+ navigator.share({files:fl,title:"SACCO application documents",text:"ID front, ID back and photo for "+val("name")}).catch(function(){});
+};
+$("bk").onclick=function(){if(cur>0)show(cur-1)};
+document.querySelectorAll("input,select").forEach(function(e){e.addEventListener("input",function(){e.parentNode.classList.remove("bad")})});
+document.querySelectorAll(".ch").forEach(function(c){c.addEventListener("change",function(){$("chanf").classList.remove("bad")})});
+$("nin").addEventListener("input",function(){this.value=this.value.toUpperCase()});
+$("samewa").addEventListener("change",function(){if(this.checked){$("wa").value=$("phone").value;$("wa").parentNode.classList.remove("bad")}});
+files.forEach(function(i){$(i).addEventListener("change",function(){
+ var p=this.parentNode.querySelector(".prev");p.textContent="";
+ var f=this.files[0];
+ if(f&&f.type.indexOf("image/")===0){var im=document.createElement("img");im.src=URL.createObjectURL(f);im.alt="Preview";p.appendChild(im)}
+ check(i);
+})});
+$("dob").max=new Date().toISOString().split("T")[0];
+show(0);
+</script>
+</body>
+</html>
